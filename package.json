@@ -1,0 +1,27 @@
+{
+  "name": "gabo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.1",
+    "svelte": "^3.49.0",
+    "vite": "^3.0.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.2",
+    "@fortawesome/free-brands-svg-icons": "^6.1.2",
+    "@fortawesome/free-solid-svg-icons": "^6.1.2",
+    "bulma": "^0.9.4",
+    "fontawesome-svelte": "^2.0.1",
+    "sass": "^1.54.0",
+    "svelma": "^0.4.5",
+    "svelte-preprocess": "^4.10.7",
+    "svelte-routing": "^1.6.0"
+  }
+}
