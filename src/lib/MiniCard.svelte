@@ -1,5 +1,4 @@
-<script lang="ts">
-  //from font-awesome
+<script>
   import {
     fa1,
     fa0,
