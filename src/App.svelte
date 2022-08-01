@@ -2,15 +2,14 @@
   import { token,  userId, userName} from "./stores/userStore.js";
   import { Router, Route, Link } from "svelte-routing";
   import Regles from "./pages/Regles.svelte";
+  import Profile from "./pages/Profile.svelte";
   import Register from "./pages/Register.svelte";
   import Login from "./pages/Login.svelte";
   import {onMount} from "svelte";
   export let url = "";
-  function logout() {
-    $token = null;
-  }
   function tokenLogin() {
     let mytoken = localStorage.getItem("token");
+    $token = mytoken;
   
     fetch(import.meta.env.VITE_API + "/user/tokenLogin", {
       method: "POST",
@@ -44,8 +43,7 @@
     <div id="myLinks">
       <Link class="not-active" to="/regles">Regles</Link>
       {#if $token}
-        <Link class="not-active" to="/">Profil</Link>
-        <Link class="not-active" to="/" on:click={logout}>Logout</Link>
+        <Link class="not-active" to="/profile">Profil</Link>
       {:else}
         <Link class="not-active" to="/login">Login</Link>
         <Link class="not-active" to="/register">Register</Link>
@@ -57,5 +55,6 @@
     <Route path="/regles"><Regles /></Route>
     <Route path="/register"><Register /></Route>
     <Route path="/login"><Login /></Route>
+    <Route path="/profile"><Profile /></Route>
   </div>
 </Router>
