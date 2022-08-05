@@ -3,7 +3,6 @@
   import { token, userName, userId } from "../stores/userStore";
   import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
   import {
-    faEnvelope,
     faLock,
     faUser,
   } from "@fortawesome/free-solid-svg-icons";
