@@ -50,7 +50,7 @@
       scoreSummary[gamerInfos[i].user.name] += gamerInfos[i].roundScore;
     }
     let lowDownhills = gamerInfos.reduce((acc, cur) => {
-      if (!cur.lowpen && !cur.highpen && game.scores[cur.user._id] != 0 && game.scores[cur.user._id] == 50) {
+      if (!cur.lowpen && !cur.highpen && game.scores[cur.user._id] != 50 && game.scores[cur.user._id] == 50) {
         acc.push(cur.user._id);
         scoreSummary[cur.user.name] /= 2;
         game.scores[cur.user._id] /= 2;
@@ -59,7 +59,7 @@
     }, []);
 
     let highDownhills = gamerInfos.reduce((acc, cur) => {
-      if (!cur.lowpen && !cur.highpen && game.scores[cur.user._id] == 100 && game.scores[cur.user._id] != 0) {
+      if (!cur.lowpen && !cur.highpen && game.scores[cur.user._id] == 100) {
         acc.push(cur.user._id);
         scoreSummary[cur.user.name] /= 2;
         game.scores[cur.user._id] /= 2;
