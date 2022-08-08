@@ -1,5 +1,6 @@
 <script>
   import { gameStore, roundsStore, groupStore } from "../stores/gameStore";
+  import { token } from "../stores/userStore";
   let rounds = JSON.parse(JSON.stringify($roundsStore));
   let playerIndexes = $groupStore.map((player) => player._id);
   let endScores = [$roundsStore[0].scores];
@@ -53,8 +54,56 @@
       return acc;
     }, {}),
   };
+  function sendGame(rounds) {
+    //in $gameStore.scores find the highest score scores are in an object keys are ids and score is the value
+    let winner = Object.keys($gameStore.scores).reduce((a, b) =>
+      $gameStore.scores[a] > $gameStore.scores[b] ? b : a
+    );
+    console.log(winner);
+    let loser = Object.keys($gameStore.scores).reduce((a, b) =>
+      $gameStore.scores[a] > $gameStore.scores[b] ? a : b
+    );
+    var payload = {
+      rounds: rounds.map((round) => round._id),
+      scores: stats.scores,
+      loser: loser,
+      winner: winner,
+      players: $groupStore.map((player) => player._id),
+    };
+    console.log(payload);
+    fetch(import.meta.env.VITE_API + "/game", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: $token,
+      },
+      body: JSON.stringify({ game: payload }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }
 
-  console.log(stats);
+  function sendRounds() {
+    fetch(import.meta.env.VITE_API + "/rounds/bulk", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: $token,
+      },
+      body: JSON.stringify({
+        rounds: rounds,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        sendGame(data.rounds);
+      });
+  }
+  console.log(stats, $gameStore);
+  sendRounds();
 </script>
 
 <svelte:head><title>GameOver</title></svelte:head>
@@ -77,15 +126,15 @@
   </tbody>
 </table>
 <div class="stats-sum">
-<span>
-  <b>Gabo:</b>
-  {#each Object.entries(stats.gabo) as [userId, gabo]}
-    <span>
-      {$groupStore.find((el) => el._id == userId).name}: {gabo}
-    </span>
-  {/each}
-</span>
-<span>
+  <span>
+    <b>Gabo:</b>
+    {#each Object.entries(stats.gabo) as [userId, gabo]}
+      <span>
+        {$groupStore.find((el) => el._id == userId).name}: {gabo}
+      </span>
+    {/each}
+  </span>
+  <span>
     <b>Petite péna:</b>
     {#each Object.entries(stats.lowpen) as [userId, gabo]}
       <span>
@@ -102,7 +151,7 @@
     {/each}
   </span>
   <span>
-    <b>Petite Redscente:</b>
+    <b>Petite redescente:</b>
     {#each Object.entries(stats.lowDownhill) as [userId, gabo]}
       <span>
         {$groupStore.find((el) => el._id == userId).name}: {gabo}
@@ -110,7 +159,7 @@
     {/each}
   </span>
   <span>
-    <b>Grande Redscente:</b>
+    <b>Grande redescente:</b>
     {#each Object.entries(stats.highDownhill) as [userId, gabo]}
       <span>
         {$groupStore.find((el) => el._id == userId).name}: {gabo}
