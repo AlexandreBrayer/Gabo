@@ -74,6 +74,19 @@ body {
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
+.card-game {
+    margin: 0 auto;
+    width: 90%;
+    max-width: 600px;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
 .user-info-card {
     background-color: #fff;
     border-radius: 4px;
