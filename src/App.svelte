@@ -59,7 +59,7 @@
     <Route path="/register"><Register /></Route>
     <Route path="/login"><Login /></Route>
     <Route path="/profile"><Profile /></Route>
-    <Route path="/game"><Game /></Route>  
+    <Route path="/game"><Game /></Route>
     <Route path="/gameover"><GameOver /></Route>
     <Route let:params path="/stats/:id"><GameStats {params} /></Route>
   </div>
