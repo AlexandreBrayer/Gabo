@@ -11,6 +11,9 @@
   let dataChart = null;
   let barChart = null;
 
+  let highestRound = 0;
+  let highestRoundScore = 0;
+
   let indivStat = "Gabo";
 
   const STAT_KEY_VALUES = {
@@ -81,6 +84,21 @@
     };
   }
 
+  function findHigestRound() {
+    highestRound = 0;
+    highestRoundScore = 0;
+    game.rounds.forEach((round, index) => {
+      let roundScore = 0;
+      Object.keys(round.scores).forEach((player) => {
+        roundScore += round.scores[player];
+      });
+      if (roundScore > highestRoundScore) {
+        highestRoundScore = roundScore;
+        highestRound = index + 1;
+      }
+    });
+  }
+
   function getStats() {
     fetch(import.meta.env.VITE_API + "/game/" + id, {
       method: "GET",
@@ -96,6 +114,7 @@
           console.log(game);
           genScoreChart();
           genBarChart();
+          findHigestRound();
         }
       });
   }
@@ -128,4 +147,7 @@
   {#if barChart}
     <Chart data={barChart} type="bar" />
   {/if}
+  <div class="ml-4">
+    Le round le plus sanglant est le {highestRound} avec {highestRoundScore} points au total
+  </div>
 {/if}
