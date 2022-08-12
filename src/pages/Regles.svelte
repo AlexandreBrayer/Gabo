@@ -208,7 +208,7 @@
   </p>
 </div>
 <div class="mx-5 mt-6">
-  <h5 class="subtitle is-4">Redscente</h5>
+  <h5 class="subtitle is-4">Redescente</h5>
 
   <p>Lorsqu'un joueur atteint le score de 50, son score retombe a 25.</p>
   <p>Lorsqu'un joueur atteint le score de 100, son score retombe a 50.</p>
