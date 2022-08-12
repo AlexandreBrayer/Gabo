@@ -19,10 +19,10 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
     "bulma": "^0.9.4",
     "fontawesome-svelte": "^2.0.1",
-    "layercake": "^7.0.0",
     "moment": "^2.29.4",
     "sass": "^1.54.0",
     "svelma": "^0.4.5",
+    "svelte-frappe-charts": "^1.9.2",
     "svelte-preprocess": "^4.10.7",
     "svelte-routing": "^1.6.0",
     "svelte-toasts": "^1.1.2"
