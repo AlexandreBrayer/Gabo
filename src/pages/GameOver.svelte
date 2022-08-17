@@ -108,7 +108,7 @@
 </script>
 
 <svelte:head><title>GameOver</title></svelte:head>
-<table class="table">
+<table class="table sumTable">
   <thead>
     <tr>
       {#each $groupStore as player}
@@ -126,7 +126,7 @@
     {/each}
   </tbody>
 </table>
-<div class="stats-sum">
+<div class="ml-4 stats-sum">
   <span>
     <b>Gabo:</b>
     {#each Object.entries(stats.gabo) as [userId, gabo]}
@@ -168,4 +168,4 @@
     {/each}
   </span>
 </div>
-<button on:click={() => {navigate("/game")}} class="button">Replay</button>
+<button on:click={() => {navigate("/game")}} class="ml-4 mt-4 is-info button">Replay</button>
