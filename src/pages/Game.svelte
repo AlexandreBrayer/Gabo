@@ -4,8 +4,11 @@
   import ScoreSummary from "../lib/ScoreSummary.svelte";
   import { navigate } from "svelte-routing";
   import { onMount } from "svelte";
+  import { FontAwesomeIcon } from "fontawesome-svelte";
+  import { faArrowRotateLeft } from "@fortawesome/free-solid-svg-icons";
   let gamers = [];
   let scoreBoard;
+  let reloadIsDisabled = true;
   let game = {
     players: $groupStore.map((player) => player._id),
     scores: $groupStore.reduce((acc, player) => {
@@ -18,6 +21,23 @@
     return acc;
   }, {});
   let rounds = [];
+
+  function correctLastScore() {
+    let lastround = rounds[rounds.length - 1];
+    rounds.pop()
+    if (lastround) {
+      for (let i = 0; i < gamers.length; i++) {
+        gamers[i].setScore(lastround);
+      }
+    }
+    for (let i = 0; i < gamers.length; i++) {
+      let player = gamers[i].getUser();
+      scoreSummary[player.name] -= lastround.scores[player._id];
+    }
+    calcScoreBoard();
+    reloadIsDisabled = true;
+    console.log(rounds);
+  }
 
   function calcScoreBoard() {
     let scoreSummaryAsArray = Object.entries(scoreSummary).map(
@@ -35,6 +55,7 @@
       gamerInfos.push(gamers[i].dumpScore());
       gamers[i].reset();
     }
+    reloadIsDisabled = false;
     let scores = gamerInfos.reduce((acc, cur) => {
       acc[cur.user._id] = cur.roundScore;
       return acc;
@@ -98,6 +119,7 @@
     $roundsStore = rounds;
     $gameStore = game;
     calcScoreBoard();
+    console.log(rounds);
 
     for (let i = 0; i < $groupStore.length; i++) {
       if (scoreSummary[$groupStore[i].name] >= 120) {
@@ -120,4 +142,11 @@
   {/each}
   <button on:click={newRound} class="button is-info">Next round</button>
   <ScoreSummary bind:this={scoreBoard} />
+  <button
+    disabled={reloadIsDisabled}
+    class="button is-info"
+    on:click={correctLastScore}
+  >
+    <FontAwesomeIcon icon={faArrowRotateLeft} />
+  </button>
 </div>
