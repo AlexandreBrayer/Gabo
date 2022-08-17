@@ -1,6 +1,7 @@
 <script>
   import { gameStore, roundsStore, groupStore } from "../stores/gameStore";
   import { token } from "../stores/userStore";
+  import {navigate} from "svelte-routing";
   let rounds = JSON.parse(JSON.stringify($roundsStore));
   let playerIndexes = $groupStore.map((player) => player._id);
   let endScores = [$roundsStore[0].scores];
@@ -107,7 +108,7 @@
 </script>
 
 <svelte:head><title>GameOver</title></svelte:head>
-<table class="table">
+<table class="table sumTable">
   <thead>
     <tr>
       {#each $groupStore as player}
@@ -125,7 +126,7 @@
     {/each}
   </tbody>
 </table>
-<div class="stats-sum">
+<div class="ml-4 stats-sum">
   <span>
     <b>Gabo:</b>
     {#each Object.entries(stats.gabo) as [userId, gabo]}
@@ -167,3 +168,4 @@
     {/each}
   </span>
 </div>
+<button on:click={() => {navigate("/game")}} class="ml-4 mt-4 is-info button">Replay</button>
