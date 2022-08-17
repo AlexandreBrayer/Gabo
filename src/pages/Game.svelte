@@ -2,8 +2,10 @@
   import GamerCard from "../lib/GamerCard.svelte";
   import { groupStore, roundsStore, gameStore } from "../stores/gameStore.js";
   import ScoreSummary from "../lib/ScoreSummary.svelte";
-  import {navigate} from "svelte-routing";
+  import { navigate } from "svelte-routing";
+  import { onMount } from "svelte";
   let gamers = [];
+  let scoreBoard;
   let game = {
     players: $groupStore.map((player) => player._id),
     scores: $groupStore.reduce((acc, player) => {
@@ -16,6 +18,17 @@
     return acc;
   }, {});
   let rounds = [];
+
+  function calcScoreBoard() {
+    let scoreSummaryAsArray = Object.entries(scoreSummary).map(
+      ([name, score]) => {
+        return { name, score };
+      }
+    );
+    scoreSummaryAsArray.sort((a, b) => a.score - b.score);
+    scoreBoard.updateScore(scoreSummaryAsArray);
+  }
+
   function newRound() {
     let gamerInfos = [];
     for (let i = 0; i < gamers.length; i++) {
@@ -50,7 +63,12 @@
       scoreSummary[gamerInfos[i].user.name] += gamerInfos[i].roundScore;
     }
     let lowDownhills = gamerInfos.reduce((acc, cur) => {
-      if (!cur.lowpen && !cur.highpen && game.scores[cur.user._id] == 50 && gabos.indexOf(cur.user._id) == -1) {
+      if (
+        !cur.lowpen &&
+        !cur.highpen &&
+        game.scores[cur.user._id] == 50 &&
+        gabos.indexOf(cur.user._id) == -1
+      ) {
         acc.push(cur.user._id);
         scoreSummary[cur.user.name] /= 2;
         game.scores[cur.user._id] /= 2;
@@ -78,7 +96,8 @@
     };
     rounds.push(round);
     $roundsStore = rounds;
-    $gameStore = game
+    $gameStore = game;
+    calcScoreBoard();
 
     for (let i = 0; i < $groupStore.length; i++) {
       if (scoreSummary[$groupStore[i].name] >= 120) {
@@ -86,6 +105,9 @@
       }
     }
   }
+  onMount(() => {
+    calcScoreBoard();
+  });
 </script>
 
 <svelte:head>
@@ -97,5 +119,5 @@
     <GamerCard {user} bind:this={gamers[i]} />
   {/each}
   <button on:click={newRound} class="button is-info">Next round</button>
-  <ScoreSummary {scoreSummary} />
+  <ScoreSummary bind:this={scoreBoard} />
 </div>
