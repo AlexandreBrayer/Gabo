@@ -19,7 +19,7 @@
   }
   export function reset() {
     pena = 0;
-    roundScore = 0;
+    roundScore = null;
     gabo = false;
   }
   function pena0(e) {
