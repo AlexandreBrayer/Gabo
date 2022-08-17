@@ -1,9 +1,12 @@
 <script>
-  export let scoreSummary;
+  let score = []
+  export function updateScore(s) {
+    score = s;
+  }
 </script>
 
 <div class="score-summary">
-  {#each Object.entries(scoreSummary) as [name,score]}
-    <span><b>{name}</b> : {score}</span>
+  {#each score as s}
+    <span><b>{s.name}</b> : {s.score}</span>
   {/each}
 </div>
