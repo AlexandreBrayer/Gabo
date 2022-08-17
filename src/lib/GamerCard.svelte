@@ -3,6 +3,26 @@
   let pena = 0;
   let roundScore;
   let gabo = false;
+
+  export function getUser() {
+    return user;
+  }
+
+  export function setScore(round) {
+    let scores = round.scores;
+    let userId = user._id;
+    roundScore = scores[userId];
+    if (round.gabo.indexOf(userId) > -1) {
+      gabo = true;
+    }
+    if (round.lowpen.indexOf(userId) > -1) {
+      pena = 1;
+    }
+    if (round.highpen.indexOf(userId) > -1) {
+      pena = 2;
+    }
+  }
+
   export function dumpScore() {
     let lowpen = pena == 1;
     let highpen = pena == 2;
@@ -24,7 +44,7 @@
   }
   function pena0(e) {
     pena = 0;
-    if(e.target.checked){
+    if (e.target.checked) {
       roundScore = 0;
     }
   }
