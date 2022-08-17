@@ -1,6 +1,7 @@
 <script>
   import { gameStore, roundsStore, groupStore } from "../stores/gameStore";
   import { token } from "../stores/userStore";
+  import {navigate} from "svelte-routing";
   let rounds = JSON.parse(JSON.stringify($roundsStore));
   let playerIndexes = $groupStore.map((player) => player._id);
   let endScores = [$roundsStore[0].scores];
@@ -167,3 +168,4 @@
     {/each}
   </span>
 </div>
+<button on:click={() => {navigate("/game")}} class="button">Replay</button>
