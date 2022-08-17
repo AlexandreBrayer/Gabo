@@ -6,9 +6,10 @@
   import { faSearch } from "@fortawesome/free-solid-svg-icons";
   import { FontAwesomeIcon } from "fontawesome-svelte";
   import { onMount } from "svelte";
-  import {navigate} from "svelte-routing";
+  import { navigate } from "svelte-routing";
   import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
   let users = [];
+  let rawUsers = [];
   let group = [];
   userId.subscribe((id) => {
     if (id) {
@@ -43,7 +44,10 @@
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          users = data.users;
+          users = data.users.filter((user) => {
+            return !group.find((g) => g._id === user._id);
+          });
+          rawUsers = data.users;
         } else {
           users = [];
         }
@@ -58,6 +62,9 @@
       showToast("Success", "User added to group", true);
       group = [...group, userToAdd];
     }
+    users = rawUsers.filter((user) => {
+      return !group.find((g) => g._id === user._id);
+    });
   }
   function removeFromGroup(e) {
     let userToRemove = e.detail;
@@ -67,12 +74,14 @@
       showToast("Success", "User removed from group", true);
       group = group.filter((user) => user._id !== userToRemove._id);
     }
+    users = rawUsers.filter((user) => {
+      return !group.find((g) => g._id === user._id);
+    });
   }
 
   function createGame() {
     $groupStore = group;
     navigate("/game");
-
   }
   onMount(() => {
     searchUsers();
