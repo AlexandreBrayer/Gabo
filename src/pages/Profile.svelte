@@ -4,6 +4,7 @@
   import ProfileGameCard from "../lib/ProfileGameCard.svelte";
   import UserCard from "../lib/UserCard.svelte";
   import { navigate } from "svelte-routing";
+  import Loader from "../lib/Loader.svelte";
   function logout() {
     $token = null;
     localStorage.removeItem("token");
@@ -53,7 +54,9 @@
   <UserCard user={userInfos} />
   <h5 class="title is-5 ml-4 mt-4">Mes parties</h5>
   {#each games as game}
-      <ProfileGameCard game={game} />
+    <ProfileGameCard {game} />
   {/each}
   <button class="button is-danger m-4" on:click={logout}>Logout</button>
+{:else}
+  <Loader />
 {/if}

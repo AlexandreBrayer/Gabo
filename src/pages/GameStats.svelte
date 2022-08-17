@@ -4,6 +4,7 @@
   import { onMount } from "svelte";
   import moment from "moment";
   import Chart from "svelte-frappe-charts";
+  import Loader from "../lib/Loader.svelte";
   export let params;
   const id = params.id;
   let game;
@@ -150,4 +151,6 @@
   <div class="ml-4">
     Le round le plus sanglant est le {highestRound} avec {highestRoundScore} points au total
   </div>
+  {:else}
+  <Loader />
 {/if}
