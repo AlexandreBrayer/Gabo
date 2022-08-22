@@ -32,11 +32,17 @@
     }
     for (let i = 0; i < gamers.length; i++) {
       let player = gamers[i].getUser();
-      scoreSummary[player.name] -= lastround.scores[player._id];
+      if (lastround.lowDownhill.includes(player._id)) {
+        scoreSummary[player.name] = 50 - lastround.scores[player._id];
+      }
+      else if (lastround.highDownhill.includes(player.id)) {
+        scoreSummary[player.name] = 100 - lastround.scores[player._id];
+      } else {
+        scoreSummary[player.name] -= lastround.scores[player._id];
+      }
     }
     calcScoreBoard();
     reloadIsDisabled = true;
-    console.log(rounds);
   }
 
   function calcScoreBoard() {
@@ -119,7 +125,6 @@
     $roundsStore = rounds;
     $gameStore = game;
     calcScoreBoard();
-    console.log(rounds);
 
     for (let i = 0; i < $groupStore.length; i++) {
       if (scoreSummary[$groupStore[i].name] >= 120) {
