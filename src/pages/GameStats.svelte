@@ -5,6 +5,7 @@
   import moment from "moment";
   import Chart from "svelte-frappe-charts";
   import Loader from "../lib/Loader.svelte";
+  import GameTab from "../lib/GameTab.svelte";
   export let params;
   const id = params.id;
   let game;
@@ -149,8 +150,12 @@
     <Chart data={barChart} type="bar" />
   {/if}
   <div class="ml-4">
-    Le round le plus sanglant est le {highestRound} avec {highestRoundScore} points au total
+    Le round le plus sanglant est le {highestRound} avec {highestRoundScore} points
+    au total
   </div>
-  {:else}
+  <div class="m-4">
+    <GameTab scores={game.scores} players={game.players} />
+  </div>
+{:else}
   <Loader />
 {/if}
