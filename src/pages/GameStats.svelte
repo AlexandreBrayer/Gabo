@@ -55,6 +55,7 @@
     dataChart = {
       labels: Array.from({ length: game.rounds.length }, (_, i) => i + 1),
       datasets: scores,
+      truncateLegends: true,
     };
   }
 
@@ -69,7 +70,6 @@
       },
     ];
     game.rounds.forEach((round) => {
-      let values = [];
       let roundStats = round[stat];
       labels.forEach((id, index) => {
         if (roundStats.includes(id)) {
