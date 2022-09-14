@@ -104,7 +104,7 @@
   {/if}
 </div>
 
-<MyGroup on:removeFromGroup={removeFromGroup} {group} />
+<MyGroup on:addToGroup={addToGroup} on:removeFromGroup={removeFromGroup} {group} />
 <div class="centered-title mb-5">
   <h3 class="title is-5 mt-5 ml-3">
     <FontAwesomeIcon icon={faSearch} />
