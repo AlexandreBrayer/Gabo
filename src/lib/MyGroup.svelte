@@ -9,11 +9,12 @@
     dispatch("removeFromGroup", user);
   }
 </script>
-
-<h3 class="title is-3 mt-5 ml-3">
-  <FontAwesomeIcon icon={faUser} />
-  <span>Groupe</span>
-</h3>
+<div class="centered-title mb-5">
+  <h3 class="title is-3 mt-5 ml-3">
+    <FontAwesomeIcon icon={faUser} />
+    <span>Groupe</span>
+  </h3>
+</div>
 
 {#each group as user}
   <div class="user-mini-card">

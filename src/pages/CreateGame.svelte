@@ -105,11 +105,12 @@
 </div>
 
 <MyGroup on:removeFromGroup={removeFromGroup} {group} />
-
-<h3 class="title is-5 mt-5 ml-3">
-  <FontAwesomeIcon icon={faSearch} />
-  <span>Rechercher un joueur</span>
-</h3>
+<div class="centered-title mb-5">
+  <h3 class="title is-5 mt-5 ml-3">
+    <FontAwesomeIcon icon={faSearch} />
+    <span>Rechercher un joueur</span>
+  </h3>
+</div>
 <div class="search-user-container">
   <input
     bind:value={search}
