@@ -24,7 +24,7 @@
 
   function correctLastScore() {
     let lastround = rounds[rounds.length - 1];
-    rounds.pop()
+    rounds.pop();
     if (lastround) {
       for (let i = 0; i < gamers.length; i++) {
         gamers[i].setScore(lastround);
@@ -34,8 +34,7 @@
       let player = gamers[i].getUser();
       if (lastround.lowDownhill.includes(player._id)) {
         scoreSummary[player.name] = 50 - lastround.scores[player._id];
-      }
-      else if (lastround.highDownhill.includes(player.id)) {
+      } else if (lastround.highDownhill.includes(player.id)) {
         scoreSummary[player.name] = 100 - lastround.scores[player._id];
       } else {
         scoreSummary[player.name] -= lastround.scores[player._id];
@@ -61,6 +60,7 @@
       gamerInfos.push(gamers[i].dumpScore());
       gamers[i].reset();
     }
+    console.log(gamerInfos);
     reloadIsDisabled = false;
     let scores = gamerInfos.reduce((acc, cur) => {
       acc[cur.user._id] = cur.roundScore;
@@ -104,8 +104,14 @@
     }, []);
 
     let highDownhills = gamerInfos.reduce((acc, cur) => {
-      if (!cur.lowpen && !cur.highpen && game.scores[cur.user._id] == 100) {
-        acc.push(cur.user._id);
+      if (
+        !cur.lowpen &&
+        !cur.highpen &&
+        game.scores[cur.user._id] == 100 &&
+        gabos.indexOf(cur.user._id) == -1
+        ) {
+          acc.push(cur.user._id);
+          console.log("Cqffqfqfqfhq,n")
         scoreSummary[cur.user.name] /= 2;
         game.scores[cur.user._id] /= 2;
       }
