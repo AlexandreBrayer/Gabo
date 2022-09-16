@@ -32,7 +32,6 @@
     }
     for (let i = 0; i < gamers.length; i++) {
       let player = gamers[i].getUser();
-      console.log(player);
       if (lastround.lowDownhill.includes(player._id)) {
         scoreSummary[player.name] = 50 - lastround.scores[player._id];
         game.scores[player._id] = 50 - lastround.scores[player._id];
@@ -49,14 +48,12 @@
   }
 
   function calcScoreBoard() {
-    console.log(scoreSummary);
     let scoreSummaryAsArray = Object.entries(scoreSummary).map(
       ([name, score]) => {
         return { name, score };
       }
     );
     scoreSummaryAsArray.sort((a, b) => a.score - b.score);
-    console.log(scoreSummaryAsArray);
     scoreBoard.updateScore(scoreSummaryAsArray);
   }
 
@@ -66,7 +63,6 @@
       gamerInfos.push(gamers[i].dumpScore());
       gamers[i].reset();
     }
-    console.log(gamerInfos);
     reloadIsDisabled = false;
     let scores = gamerInfos.reduce((acc, cur) => {
       acc[cur.user._id] = cur.roundScore;
