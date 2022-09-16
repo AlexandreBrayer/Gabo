@@ -2,14 +2,9 @@
   import { FontAwesomeIcon } from "fontawesome-svelte";
   import { token, userName, userId } from "../stores/userStore";
   import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
-  import {
-    faEnvelope,
-    faLock,
-    faUser,
-  } from "@fortawesome/free-solid-svg-icons";
-  import {navigate} from 'svelte-routing';
+  import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
   let name = "";
-  let email = "";
+  let otp = "";
   let password = "";
   let password2 = "";
   const showToast = (title, description, succes) => {
@@ -22,24 +17,20 @@
       theme: "dark",
     });
   };
-
-  function goOtp() {
-    navigate('/register-otp');
-  }
   function register(e) {
     e.preventDefault();
     if (password !== password2) {
       showToast("Error", "Passwords do not match", false);
       return;
     }
-    fetch(import.meta.env.VITE_API + "/user/register", {
+    fetch(import.meta.env.VITE_API + "/guest/toUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name: name,
-        email: email,
+        otp: otp,
         password: password,
       }),
     })
@@ -48,7 +39,7 @@
         if (data.success) {
           showToast("Success", "You have successfully registered", true);
           name = "";
-          email = "";
+          otp = "";
           password = "";
           password2 = "";
           $token = data.token;
@@ -75,15 +66,15 @@
     </p>
   </div>
   <div class="field mb-4">
-    <p class="control has-icons-left has-icons-right">
+    <p class="control has-icons-left">
       <input
-        bind:value={email}
+        bind:value={otp}
         class="input"
-        type="email"
-        placeholder="Email"
+        type="text"
+        placeholder="One Time Password"
       />
       <span class="icon is-small is-left">
-        <FontAwesomeIcon icon={faEnvelope} />
+        <FontAwesomeIcon icon={faLock} />
       </span>
     </p>
   </div>
@@ -119,17 +110,6 @@
     </p>
   </div>
 </form>
-<div class="one-time-password-link">
-  <button on:click={goOtp} class="button is-warning">I have a One Time Password !</button>
-</div>
 <ToastContainer placement="bottom-right" let:data>
   <FlatToast {data} />
 </ToastContainer>
-
-<style>
-  .one-time-password-link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-</style>

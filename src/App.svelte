@@ -8,6 +8,7 @@
   import CreateGame from "./pages/CreateGame.svelte";
   import GameOver from "./pages/GameOver.svelte";
   import Login from "./pages/Login.svelte";
+  import RegisterOtp from "./pages/RegisterOtp.svelte";
   import GameStats from "./pages/GameStats.svelte";
   import { onMount } from "svelte";
   export let url = "";
@@ -61,6 +62,7 @@
     <Route path="/profile"><Profile /></Route>
     <Route path="/game"><Game /></Route>
     <Route path="/gameover"><GameOver /></Route>
+    <Route path="/register-otp"><RegisterOtp /></Route>
     <Route let:params path="/stats/:id"><GameStats {params} /></Route>
   </div>
 </Router>
