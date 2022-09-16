@@ -32,12 +32,16 @@
     }
     for (let i = 0; i < gamers.length; i++) {
       let player = gamers[i].getUser();
+      console.log(player);
       if (lastround.lowDownhill.includes(player._id)) {
         scoreSummary[player.name] = 50 - lastround.scores[player._id];
-      } else if (lastround.highDownhill.includes(player.id)) {
+        game.scores[player._id] = 50 - lastround.scores[player._id];
+      } else if (lastround.highDownhill.includes(player._id)) {
         scoreSummary[player.name] = 100 - lastround.scores[player._id];
+        game.scores[player._id] = 100 - lastround.scores[player._id];
       } else {
         scoreSummary[player.name] -= lastround.scores[player._id];
+        game.scores[player._id] -= lastround.scores[player._id];
       }
     }
     calcScoreBoard();
@@ -45,12 +49,14 @@
   }
 
   function calcScoreBoard() {
+    console.log(scoreSummary);
     let scoreSummaryAsArray = Object.entries(scoreSummary).map(
       ([name, score]) => {
         return { name, score };
       }
     );
     scoreSummaryAsArray.sort((a, b) => a.score - b.score);
+    console.log(scoreSummaryAsArray);
     scoreBoard.updateScore(scoreSummaryAsArray);
   }
 
@@ -111,7 +117,6 @@
         gabos.indexOf(cur.user._id) == -1
         ) {
           acc.push(cur.user._id);
-          console.log("Cqffqfqfqfhq,n")
         scoreSummary[cur.user.name] /= 2;
         game.scores[cur.user._id] /= 2;
       }
