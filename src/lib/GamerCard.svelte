@@ -42,11 +42,13 @@
     roundScore = null;
     gabo = false;
   }
-  function pena0(e) {
-    pena = 0;
-    if (e.target.checked) {
+  function pena0() {
+    gabo = !gabo;
+    if (gabo) {
+      pena = 0;
       roundScore = 0;
     }
+
   }
   function pena25() {
     pena == 1 ? (pena = 0) : (pena = 1);
@@ -59,22 +61,15 @@
 </script>
 
 <div class="gamer-card-container my-3">
-  <h6 class="title is-6 mb-0">{user.name}</h6>
-  <input type="number" class="input score-input" bind:value={roundScore} />
-  <button on:click={pena25} class={pena == 1 ? "button is-warning" : "button"}
-    >+25</button
-  >
-  <button on:click={pena50} class={pena == 2 ? "button is-danger" : "button"}
-    >+50</button
-  >
-  <div class="checkbox-gabo">
-    <label for="gabo" class="label">GABO</label>
-    <input
-      on:change={pena0}
-      bind:checked={gabo}
-      type="checkbox"
-      class="checkbox"
-      id="gabo"
-    />
+  <h6 class="title is-6 mb-3">{user.name}</h6>
+  <div class="gamer-card-container-inputs">
+    <input type="number" class="input score-input" bind:value={roundScore} />
+    <button on:click={pena25} class={pena == 1 ? "button is-warning" : "button"}
+      >+25</button
+    >
+    <button on:click={pena50} class={pena == 2 ? "button is-danger" : "button"}
+      >+50</button
+    >
+    <button class={gabo ? "button is-success" : "button"} on:click={pena0}> GABO </button>
   </div>
 </div>

@@ -47,6 +47,7 @@ body {
 
 .gamer-card-container {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     padding: 20px;
     border-radius: 10px;
