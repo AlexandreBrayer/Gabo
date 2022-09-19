@@ -1,13 +1,9 @@
 <script>
   import { FontAwesomeIcon } from "fontawesome-svelte";
+  import { groupStore } from "../stores/gameStore.js";
   import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
-  import {
-    faEnvelope,
-    faUser,
-  } from "@fortawesome/free-solid-svg-icons";
-  import { createEventDispatcher } from "svelte";
+  import { faEnvelope, faUser } from "@fortawesome/free-solid-svg-icons";
 
-  const dispatch = createEventDispatcher();
   let name = "";
   let email = "";
   let otp = "";
@@ -50,27 +46,34 @@
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data.success) {
           showToast("Success", "Guest created", true);
           name = "";
           email = "";
           otp = data.otp;
-          dispatch("addToGroup", data.user);
+          let group = $groupStore;
+          group.push(data.user);
+          $groupStore = group;
         } else {
           showToast("Error", data.message, false);
         }
       });
   }
-
 </script>
 
-<div on:click|self class='modal'>
-	<div class='content'>
+<div on:click|self class="modal">
+  <div class="content">
     <div>
       <form class=" user-form mt-6">
         <div class="field mb-4">
           <p class="control has-icons-left has-icons-right">
-            <input bind:value={name} class="input" type="text" placeholder="Name" />
+            <input
+              bind:value={name}
+              class="input"
+              type="text"
+              placeholder="Name"
+            />
             <span class="icon is-small is-left">
               <FontAwesomeIcon icon={faUser} />
             </span>
@@ -91,7 +94,9 @@
         </div>
         <div class="field">
           <p class="control">
-            <button on:click={createGuest} class="button is-success"> Céer + ajouter au groupe</button>
+            <button on:click={createGuest} class="button is-success">
+              Céer + ajouter au groupe</button
+            >
           </p>
         </div>
       </form>
@@ -99,32 +104,31 @@
         One Time Password : <span class="otp-code"><b>{otp}</b></span>
       </div>
     </div>
-	</div>
+  </div>
 </div>
 
 <ToastContainer placement="bottom-right" let:data>
   <FlatToast {data} />
 </ToastContainer>
 
-
 <style>
-	.modal {
-		background-color: rgba(0, 0, 0, 0.4);
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	
-	.content {
+  .modal {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .content {
     background-color: white;
     border-radius: 10px;
     padding: 5px;
-		width: 20em;
-		height: 20em;
-	}
+    width: 20em;
+    height: 20em;
+  }
 </style>
