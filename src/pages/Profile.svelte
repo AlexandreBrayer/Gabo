@@ -18,6 +18,7 @@
   let userInfos = null;
   let page = 0;
   let games = [];
+  let loadingGames = true;
 
   function nextPage() {
     page++;
@@ -29,6 +30,7 @@
   }
 
   function getGames() {
+    loadingGames = true;
     fetch(import.meta.env.VITE_API + "/game/mygames?page=" + page, {
       headers: {
         Authorization: $token,
@@ -37,6 +39,8 @@
       .then((res) => res.json())
       .then((data) => {
         games = data.games;
+        loadingGames = false;
+        console.log(loadingGames);
       });
   }
 
@@ -66,17 +70,25 @@
 {#if userInfos}
   <UserCard user={userInfos} />
   <h5 class="title is-5 ml-4 mt-4">Mes parties</h5>
-  {#each games as game}
-    <ProfileGameCard {game} />
-  {/each}
-  <div class="navigator">
-    <button on:click={previousPage} disabled={page < 1} class="button is-info">
-      <FontAwesomeIcon icon={faAngleLeft} /></button
-    >
-    <button on:click={nextPage} class="button is-info">
-      <FontAwesomeIcon icon={faAngleRight} /></button
-    >
-  </div>
+  {#if !loadingGames}
+    {#each games as game}
+      <ProfileGameCard {game} />
+    {/each}
+    <div class="navigator">
+      <button
+        on:click={previousPage}
+        disabled={page < 1}
+        class="button is-info"
+      >
+        <FontAwesomeIcon icon={faAngleLeft} /></button
+      >
+      <button on:click={nextPage} class="button is-info">
+        <FontAwesomeIcon icon={faAngleRight} /></button
+      >
+    </div>
+  {:else}
+    <p class="ml-4"><Loader/></p>
+  {/if}
   <button class="button is-danger m-4" on:click={logout}>Logout</button>
 {:else}
   <Loader />
