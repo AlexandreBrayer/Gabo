@@ -37,15 +37,16 @@
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
+          console.log(data)
           showToast("Success", "You have successfully registered", true);
           name = "";
           otp = "";
           password = "";
           password2 = "";
-          $token = data.token;
-          $userName = data.name;
-          $userId = data.userId;
-          localStorage.setItem("token", data.token);
+          $token = data.user.token;
+          $userName = data.user.name;
+          $userId = data.user.userId;
+          localStorage.setItem("token", data.user.token);
         } else {
           showToast("Error", data.message, false);
         }
