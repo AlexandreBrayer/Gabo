@@ -26,9 +26,9 @@
   export function dumpScore() {
     let lowpen = pena == 1;
     let highpen = pena == 2;
-    if (!roundScore) {
-      roundScore = 0;
-    }
+    // if (!roundScore) {
+    //   roundScore = 0;
+    // }
     return {
       lowpen,
       highpen,

@@ -11,6 +11,17 @@
   import { onMount } from "svelte";
   import { FontAwesomeIcon } from "fontawesome-svelte";
   import { faArrowRotateLeft } from "@fortawesome/free-solid-svg-icons";
+  import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
+  const showToast = (title, description, succes) => {
+    toasts.add({
+      title: title,
+      description: description,
+      duration: 1000,
+      placement: "bottom-right",
+      type: succes ? "success" : "error",
+      theme: "dark",
+    });
+  };
   let gamers = [];
   let scoreBoard;
   let reloadIsDisabled = true;
@@ -64,6 +75,14 @@
 
   function newRound() {
     let gamerInfos = [];
+    for (let i = 0; i < gamers.length; i++) {
+      let check = gamers[i].dumpScore();
+      if (check.roundScore === null) {
+        console.log(check)
+        showToast("Error", "Please fill in all scores", false);
+        return;
+      }
+    }
     for (let i = 0; i < gamers.length; i++) {
       gamerInfos.push(gamers[i].dumpScore());
       gamers[i].reset();
@@ -142,7 +161,7 @@
       acc[id] = cur[1];
       return acc;
     }, {});
-    $scoreboardStore.push(scoreBoard)
+    $scoreboardStore.push(scoreBoard);
 
     for (let i = 0; i < $groupStore.length; i++) {
       if (scoreSummary[$groupStore[i].name] >= 120) {
@@ -173,3 +192,7 @@
     <FontAwesomeIcon icon={faArrowRotateLeft} />
   </button>
 </div>
+
+<ToastContainer placement="bottom-right" let:data>
+  <FlatToast {data} />
+</ToastContainer>
