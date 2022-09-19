@@ -15,26 +15,27 @@
   function tokenLogin() {
     let mytoken = localStorage.getItem("token");
     $token = mytoken;
-
-    fetch(import.meta.env.VITE_API + "/user/tokenLogin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: mytoken,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          $token = data.token;
-          $userName = data.name;
-          $userId = data.userId;
-        } else {
-          $token = null;
-        }
-      });
+    if (mytoken) {
+      fetch(import.meta.env.VITE_API + "/user/tokenLogin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: mytoken,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            $token = data.token;
+            $userName = data.name;
+            $userId = data.userId;
+          } else {
+            $token = null;
+          }
+        });
+    }
   }
   onMount(() => {
     tokenLogin();
