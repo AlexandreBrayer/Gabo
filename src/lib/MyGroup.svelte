@@ -13,6 +13,7 @@
   function toggleModal() {
 		toggleGuestModal = !toggleGuestModal;
 	}
+  console.log(group);
 </script>
 
 <div class="centered-title mb-5">
@@ -46,5 +47,6 @@
 {#if toggleGuestModal}
 	<Modal on:addToGroup={(e) => {
     dispatch("addToGroup", e.detail);
+    console.log(e.detail);
   }} on:click={toggleModal}/>
 {/if}

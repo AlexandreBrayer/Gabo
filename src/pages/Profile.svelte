@@ -1,12 +1,14 @@
 <script>
   import { onMount } from "svelte";
-  import { token } from "../stores/userStore.js";
+  import { token, userId, userName } from "../stores/userStore.js";
   import ProfileGameCard from "../lib/ProfileGameCard.svelte";
   import UserCard from "../lib/UserCard.svelte";
   import { navigate } from "svelte-routing";
   import Loader from "../lib/Loader.svelte";
   function logout() {
     $token = null;
+    $userId = null;
+    $userName = null;
     localStorage.removeItem("token");
     navigate("/", { replace: true });
   }

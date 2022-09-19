@@ -14,7 +14,7 @@
   $scoreboardStore = []
   userId.subscribe((id) => {
     if (id) {
-      group = [
+      $groupStore = [
         {
           _id: $userId,
           name: $userName,
@@ -46,7 +46,7 @@
       .then((data) => {
         if (data.success) {
           users = data.users.filter((user) => {
-            return !group.find((g) => g._id === user._id);
+            return !$groupStore.find((g) => g._id === user._id);
           });
           rawUsers = data.users;
         } else {
@@ -57,31 +57,32 @@
 
   function addToGroup(e) {
     let userToAdd = e.detail;
-    if (group.find((user) => user._id === userToAdd._id)) {
+    if ($groupStore.find((user) => user._id === userToAdd._id)) {
       showToast("Error", "User already in group", false);
     } else {
       showToast("Success", "User added to group", true);
-      group = [...group, userToAdd];
+      $groupStore = [...$groupStore, userToAdd];
     }
     users = rawUsers.filter((user) => {
-      return !group.find((g) => g._id === user._id);
+      return !$groupStore.find((g) => g._id === user._id);
     });
   }
+
   function removeFromGroup(e) {
     let userToRemove = e.detail;
-    if (!group.find((user) => user._id === userToRemove._id)) {
+    if (!$groupStore.find((user) => user._id === userToRemove._id)) {
       showToast("Error", "User not in group", false);
     } else {
       showToast("Success", "User removed from group", true);
-      group = group.filter((user) => user._id !== userToRemove._id);
+      $groupStore = $groupStore.filter((user) => user._id !== userToRemove._id);
     }
     users = rawUsers.filter((user) => {
-      return !group.find((g) => g._id === user._id);
+      return !$groupStore.find((g) => g._id === user._id);
     });
   }
 
   function createGame() {
-    $groupStore = group;
+    // $groupStore = group;
     navigate("/game");
   }
   onMount(() => {
@@ -94,7 +95,7 @@
 </svelte:head>
 
 <div class="create-game">
-  {#if group.length > 1}
+  {#if $groupStore.length > 1}
     <button class="button is-primary" on:click={createGame}>
       Create Game
     </button>
@@ -105,7 +106,7 @@
   {/if}
 </div>
 
-<MyGroup on:addToGroup={addToGroup} on:removeFromGroup={removeFromGroup} {group} />
+<MyGroup on:addToGroup={addToGroup} on:removeFromGroup={removeFromGroup} group={$groupStore} />
 <div class="centered-title mb-5">
   <h3 class="title is-5 mt-5 ml-3">
     <FontAwesomeIcon icon={faSearch} />
