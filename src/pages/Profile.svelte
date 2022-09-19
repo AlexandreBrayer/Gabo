@@ -37,10 +37,8 @@
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.success) {
           userInfos = data.user;
-          console.log(userInfos);
         } else {
           userInfos = null;
         }

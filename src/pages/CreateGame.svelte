@@ -1,7 +1,7 @@
 <script>
   import MyGroup from "../lib/MyGroup.svelte";
   import UserList from "../lib/UserList.svelte";
-  import { groupStore } from "../stores/gameStore";
+  import { groupStore, scoreboardStore } from "../stores/gameStore";
   import { userId, userName } from "../stores/userStore";
   import { faSearch } from "@fortawesome/free-solid-svg-icons";
   import { FontAwesomeIcon } from "fontawesome-svelte";
@@ -9,7 +9,9 @@
   import { navigate } from "svelte-routing";
   import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
   let users = [];
-  let rawUsers = []; 
+  let rawUsers = [];
+  let group = [];
+  $scoreboardStore = []
   userId.subscribe((id) => {
     if (id) {
       $groupStore = [

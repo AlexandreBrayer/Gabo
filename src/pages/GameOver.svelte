@@ -1,5 +1,10 @@
 <script>
-  import { gameStore, roundsStore, groupStore } from "../stores/gameStore";
+  import {
+    gameStore,
+    roundsStore,
+    groupStore,
+    scoreboardStore,
+  } from "../stores/gameStore";
   import { token } from "../stores/userStore";
   import { navigate } from "svelte-routing";
   let rounds = JSON.parse(JSON.stringify($roundsStore));
@@ -60,18 +65,16 @@
     let winner = Object.keys($gameStore.scores).reduce((a, b) =>
       $gameStore.scores[a] > $gameStore.scores[b] ? b : a
     );
-    console.log(winner);
     let loser = Object.keys($gameStore.scores).reduce((a, b) =>
       $gameStore.scores[a] > $gameStore.scores[b] ? a : b
     );
     var payload = {
       rounds: rounds.map((round) => round._id),
-      scores: stats.scores,
+      scores: $scoreboardStore,
       loser: loser,
       winner: winner,
       players: $groupStore.map((player) => player._id),
     };
-    console.log(payload);
     fetch(import.meta.env.VITE_API + "/game", {
       method: "POST",
       headers: {
@@ -99,11 +102,9 @@
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         sendGame(data.rounds);
       });
   }
-  console.log(stats, $gameStore);
   sendRounds();
 </script>
 
@@ -117,10 +118,10 @@
     </tr>
   </thead>
   <tbody>
-    {#each $roundsStore as round}
+    {#each $scoreboardStore as round}
       <tr>
-        {#each playerIndexes as id}
-          <td>{round.scores[id]}</td>
+        {#each Object.entries(round) as [key, value]}
+          <td>{value}</td>
         {/each}
       </tr>
     {/each}
@@ -171,10 +172,10 @@
 <button
   on:click={() => {
     navigate("/game");
+    $scoreboardStore = [];
   }}
   class="ml-4 mt-4 is-info button">Replay</button
 >
-
 <style>
   .game-tab {
     width: 100%;
