@@ -113,7 +113,6 @@
       .then((data) => {
         if (data.success) {
           game = data.game;
-          console.log(game);
           genScoreChart();
           genBarChart();
           findHigestRound();

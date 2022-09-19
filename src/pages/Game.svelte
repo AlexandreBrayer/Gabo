@@ -1,6 +1,11 @@
 <script>
   import GamerCard from "../lib/GamerCard.svelte";
-  import { groupStore, roundsStore, gameStore } from "../stores/gameStore.js";
+  import {
+    groupStore,
+    roundsStore,
+    gameStore,
+    scoreboardStore,
+  } from "../stores/gameStore.js";
   import ScoreSummary from "../lib/ScoreSummary.svelte";
   import { navigate } from "svelte-routing";
   import { onMount } from "svelte";
@@ -111,8 +116,8 @@
         !cur.highpen &&
         game.scores[cur.user._id] == 100 &&
         gabos.indexOf(cur.user._id) == -1
-        ) {
-          acc.push(cur.user._id);
+      ) {
+        acc.push(cur.user._id);
         scoreSummary[cur.user.name] /= 2;
         game.scores[cur.user._id] /= 2;
       }
@@ -132,6 +137,12 @@
     $roundsStore = rounds;
     $gameStore = game;
     calcScoreBoard();
+    let scoreBoard = Object.entries(scoreSummary).reduce((acc, cur) => {
+      let id = $groupStore.find((player) => player.name == cur[0])._id;
+      acc[id] = cur[1];
+      return acc;
+    }, {});
+    $scoreboardStore.push(scoreBoard)
 
     for (let i = 0; i < $groupStore.length; i++) {
       if (scoreSummary[$groupStore[i].name] >= 120) {
