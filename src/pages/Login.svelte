@@ -6,6 +6,7 @@
     faLock,
     faUser,
   } from "@fortawesome/free-solid-svg-icons";
+  import {navigate} from "svelte-routing";
   let name = "";
   let password = "";
   const showToast = (title, description, succes) => {
@@ -33,13 +34,14 @@
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          showToast("Success", "Welcome back", true);
+          // showToast("Success", "Welcome back", true);
           name = "";
           password = "";
           $token = data.token;
           $userName = data.name;
           $userId = data.userId;
           localStorage.setItem("token", data.token);
+          navigate("/profile");
         } else {
           showToast("Error", data.message, false);
         }
