@@ -77,8 +77,7 @@
     let gamerInfos = [];
     for (let i = 0; i < gamers.length; i++) {
       let check = gamers[i].dumpScore();
-      if (check.roundScore === null) {
-        console.log(check)
+      if (check.roundScore === null || check.roundScore === undefined) {
         showToast("Error", "Please fill in all scores", false);
         return;
       }
