@@ -10,7 +10,6 @@
   import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
   let users = [];
   let rawUsers = [];
-  let group = [];
   $scoreboardStore = []
   userId.subscribe((id) => {
     if (id) {
