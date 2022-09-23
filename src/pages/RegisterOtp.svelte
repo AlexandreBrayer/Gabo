@@ -37,7 +37,6 @@
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          console.log(data)
           showToast("Success", "You have successfully registered", true);
           name = "";
           otp = "";

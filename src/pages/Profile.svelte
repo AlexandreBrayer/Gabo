@@ -40,7 +40,6 @@
       .then((data) => {
         games = data.games;
         loadingGames = false;
-        console.log(loadingGames);
       });
   }
 

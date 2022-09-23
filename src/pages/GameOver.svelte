@@ -83,10 +83,6 @@
       },
       body: JSON.stringify({ game: payload }),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
   }
 
   function sendRounds() {

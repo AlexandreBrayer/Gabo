@@ -46,7 +46,6 @@
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.success) {
           showToast("Success", "Guest created", true);
           name = "";
