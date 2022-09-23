@@ -3,6 +3,7 @@
   import { token, userId, userName } from "../stores/userStore.js";
   import ProfileGameCard from "../lib/ProfileGameCard.svelte";
   import UserCard from "../lib/UserCard.svelte";
+  import Stats from "../lib/Stats.svelte";
   import { navigate } from "svelte-routing";
   import Loader from "../lib/Loader.svelte";
   import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
@@ -19,6 +20,7 @@
   let page = 0;
   let games = [];
   let loadingGames = true;
+  let stats = null;
 
   function nextPage() {
     page++;
@@ -60,14 +62,36 @@
         }
       });
   }
+
+  function getStats() {
+    fetch(import.meta.env.VITE_API + "/stats/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: $token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          stats = data.stats;
+        } else {
+          stats = null;
+        }
+      });
+  }
   onMount(() => {
     getUserInfo();
     getGames();
+    getStats();
   });
 </script>
 
 {#if userInfos}
   <UserCard user={userInfos} />
+  {#if stats}
+    <Stats data={stats} />
+  {/if}
   <h5 class="title is-5 ml-4 mt-4">Mes parties</h5>
   {#if !loadingGames}
     {#each games as game}
@@ -86,7 +110,7 @@
       >
     </div>
   {:else}
-    <p class="ml-4"><Loader/></p>
+    <p class="ml-4"><Loader /></p>
   {/if}
   <button class="button is-danger m-4" on:click={logout}>Logout</button>
 {:else}
