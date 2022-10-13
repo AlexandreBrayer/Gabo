@@ -15,6 +15,12 @@ body {
     margin-left: 20px;
 }
 
+.profile-pic {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
 .centered-title {
     margin: 0 auto;
     width: 100%;
@@ -81,7 +87,7 @@ body {
     margin: 0 auto;
     width: 100%;
     max-width: 600px;
-    padding: 1rem;
+    padding: 0.5rem;
     background-color: #fff;
     border-radius: 4px;
     display: flex;
@@ -113,6 +119,7 @@ body {
     margin-top: 5vh;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .user-form {

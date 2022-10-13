@@ -24,6 +24,13 @@
 
 {#each group as user}
   <div class="user-mini-card">
+    <div>
+      <img
+        class="profile-pic"
+        src="https://robohash.org/{user.name}"
+        alt="Profile pic"
+      />
+    </div>
     <b>{user.name}</b>
     {#if user._id == $userId}
       <button disabled class="button is-danger">X</button>
