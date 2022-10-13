@@ -58,11 +58,11 @@
     </div>
     <div class="stats-item-third">
       <h6 class="title is-6 mb-1">Ratio</h6>
-      <p>{(data.totalRounds / data.totalGames || 0).toFixed(2)}</p>
+      <p>{(data.rounds / data.totalGames || 0).toFixed(2)}</p>
     </div>
     <div class="stats-item-third">
       <h6 class="title is-6 mb-1">Round played</h6>
-      <p>{data.totalRounds}</p>
+      <p>{data.rounds}</p>
     </div>
   </div>
   <!-- <div class="stats-line">
