@@ -108,7 +108,10 @@
   </p>
   <p>
     NB: Si un joueur se défausse de toutes ses cartes, la manche se termine
-    automatiquement et personne ne peut annoncer "Gabo".
+    automatiquement et personne ne peut annoncer "Gabo". Dans le cas ou le
+    joueur annonce le gabo, et avant la révélation des cartes un joueur se
+    défausse de toutes ses cartes. Le gabo est annulé , la manche se termine
+    aussi.
   </p>
 </div>
 <div class="mx-5 mt-6">
@@ -149,11 +152,11 @@
     />
     <MiniCard
       icon={"V"}
-      text={"Possibilité d'échanger à l'aveugle une de ses cartes avec celle d'un adversaire. Interdiction pour les joueurs de regarder les cartes ainsi échangées (possibilité ultérieure à l'aide du pouvoir des cartes 7 et 8)."}
+      text={"Possibilité d'échanger à l'aveugle une de ses cartes avec celle d'un adversaire. Interdiction pour les joueurs de regarder les cartes ainsi échangées (possibilité ultérieure à l'aide du pouvoir des cartes 7 et 8). Aucun Gabo ne peut être annoncé avant que le joueur n'ait effectué son choix."}
     />
     <MiniCard
       icon={"D"}
-      text={"Possibilité de regarder la carte d'un adversaire et possibilité de l'échanger avec l'une de ses cartes."}
+      text={"Possibilité de regarder la carte d'un adversaire et possibilité de l'échanger avec l'une de ses cartes. Aucun Gabo ne peut être annoncé avant que le joueur n'ait effectué son choix."}
     />
   </div>
 </div>
@@ -169,14 +172,22 @@
         carte inconnue à gérer.
       </li>
       <li>
-        Si un joueur annonce "Gabo", hors il se retrouve avec un score supérieur
+        Pénalité A: Si un joueur annonce "Gabo", hors il se retrouve avec un score supérieur
         à 7. Lors du décompte des points, il auras une pénalité de +25 points.
-        (A)
       </li>
       <li>
+        Pénalité B:
         Si un joueur se retrouve victime d'un "Contre-Gabo" (voir la section
         Contre-Gabo). Lors du décompte des points, il auras une pénalité de +50
-        points. (B)
+        points.
+      </li>
+      <li>
+        Pénalité C: Un Gabo est annoncé, Le scenario de la pénalité A devrait
+        être appliqué mais au moment ou elle se passe, mais 2 autres joueurs
+        (pour n'importe quelle parti a "n" joueurs) ont plus ou égal 25 points
+        de carte. La pénalité C s'applique, les joueurs ayant plus ou égal de 25
+        en points, prenne la pénalité A. La personne ayant annoncé le gabo:
+        prend la pénalité A ~et~ la somme des points de ses cartes.
       </li>
     </ul>
   </div>
